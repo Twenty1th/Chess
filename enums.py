@@ -1,4 +1,6 @@
-from enum import Enum, StrEnum, IntEnum
+from enum import StrEnum, IntEnum
+
+from colorama import Fore
 
 
 class HorizontalCoordinates(StrEnum):
@@ -21,3 +23,17 @@ class VerticalCoordinates(IntEnum):
     SIX = 6
     SEVEN = 7
     EIGHT = 8
+
+
+class ShapeUnicodes(StrEnum):
+    KING = "\u2654"
+    QUEEN = "\u2655"
+    ROOK = "\u2656"
+    BISHOP = "\u2657"
+    KNIGHT = "\u2658"
+    PAWN = "\u2659"
+
+
+class ShapeColors(StrEnum):
+    BLACK = Fore.LIGHTBLACK_EX
+    WHITE = Fore.BLUE

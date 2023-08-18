@@ -1,18 +1,16 @@
-from abc import ABC, abstractmethod
-
 from colorama import Back, Style
 
 from coordinates import Coordinates
-from shape import Shape
+from shapes.shape import Shape
 
 
 class Square:
 
     def __init__(self,  shape: Shape, coordinates: Coordinates):
-        self._shape: Shape = shape
         self._coordinates: Coordinates = coordinates
         self._DEFAULT_BACKGROUND_COLOR: Back = Back.BLACK if (ord(self._coordinates[0]) + self._coordinates[1]) % 2 == 0 else Back.WHITE
         self._background_color: Back = self._DEFAULT_BACKGROUND_COLOR
+        self._shape: Shape = shape
 
     @property
     def shape(self):
@@ -45,5 +43,4 @@ class Square:
         self._background_color = self._DEFAULT_BACKGROUND_COLOR
 
     def __repr__(self):
-        return self._background_color + f"  {self._shape}  " + Style.RESET_ALL
-
+        return self._background_color + f"{self._shape if self.shape else '   '}" + Style.RESET_ALL
