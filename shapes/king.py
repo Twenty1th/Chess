@@ -5,8 +5,9 @@ from .shape import Shape
 
 
 class King(Shape):
-    def move(self, coordinate):
-        pass
+    @property
+    def can_jump(self) -> bool:
+        return False
 
-    def get_available_moves(self) -> List[Coordinates]:
+    def moves(self):
         pass

@@ -1,12 +1,10 @@
-from typing import List
-
-from coordinates import Coordinates
 from .shape import Shape
 
 
 class Bishop(Shape):
-    def move(self, coordinate):
-        pass
+    @property
+    def can_jump(self) -> bool:
+        return False
 
-    def get_available_moves(self) -> List[Coordinates]:
-        pass
+    def moves(self):
+        return [(i, abs(i)) if j == 0 else (abs(i), i) for i in range(-7, 8) for j in range(0, 2)]

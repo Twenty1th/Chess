@@ -1,12 +1,10 @@
-from typing import List
-
-from coordinates import Coordinates
 from .shape import Shape
 
 
 class Pawn(Shape):
-    def move(self, coordinate):
-        pass
+    @property
+    def can_jump(self) -> bool:
+        return False
 
-    def get_available_moves(self) -> List[Coordinates]:
-        pass
+    def moves(self):
+        return [(0, 1), (0, 2)]

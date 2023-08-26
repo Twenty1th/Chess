@@ -1,12 +1,10 @@
-from typing import List
-
-from coordinates import Coordinates
 from .shape import Shape
 
 
 class Rook(Shape):
-    def move(self, coordinate):
-        pass
+    @property
+    def can_jump(self):
+        return False
 
-    def get_available_moves(self) -> List[Coordinates]:
-        pass
+    def moves(self):
+        return [(0, i) if j == 0 else (i, 0) for i in range(-7, 8) for j in range(0, 2)]

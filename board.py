@@ -6,7 +6,6 @@ from square import Square
 from coordinates import Coordinates
 from enums import HorizontalCoordinates, VerticalCoordinates, ShapeColors
 
-
 board = List[List[Square]]
 
 
@@ -39,22 +38,80 @@ class Board(board):
 
     def change_square_shape(self, coordinate: Coordinates, new_shape: Shape):
         k = {value: key for key, value in enumerate(HorizontalCoordinates)}
+        new_shape.coordinates = coordinate
         self[coordinate.vertical][k[coordinate.horizontal]].shape = new_shape
 
-    def rm_shape_from_square(self, coordinate: Coordinates):
+    def rm_shape_from_square(self, shape: Shape):
         k = {value: key for key, value in enumerate(HorizontalCoordinates)}
-        self[coordinate.vertical][k[coordinate.horizontal]].rm_shape()
+        self[shape.coordinates.vertical][k[shape.coordinates.horizontal]].rm_shape()
 
-    def get_shape_moves(self, coordinates: Coordinates) -> List[Coordinates]:
-        if self.is_have_shape_by_coordinate(coordinates):
-            shape = self.get_shape_by_coordinate(coordinates)
-            return shape.get_available_moves()
+    def get_shape_moves(self, shape: Shape) -> List[Coordinates]:  # noqa
+        moves: List[Coordinates] = []
+        min_horiz_coord: str = "A"
+        max_horiz_coord: str = "H"
+        min_vertical_coord: int = 1
+        max_vertical_coord: int = 7
+        for coordinate in shape.get_available_moves():
+            if not self.coordinate_is_available(coordinate):
+                if coordinate.vertical > shape.coordinates.vertical and not coordinate.vertical > max_vertical_coord:
+                    max_vertical_coord = coordinate.vertical
+                elif coordinate.vertical < shape.coordinates.vertical and not coordinate.vertical < min_vertical_coord:
+                    min_vertical_coord = coordinate.vertical
+                if coordinate.horizontal > shape.coordinates.horizontal and not coordinate.horizontal > max_horiz_coord:
+                    max_horiz_coord = coordinate.horizontal
+                elif coordinate.horizontal < shape.coordinates.horizontal and not coordinate.horizontal < min_horiz_coord:
+                    min_horiz_coord = coordinate.horizontal
+            else:
+                if any(
+                        [(
+                                coordinate.vertical >= shape.coordinates.vertical
+                                and not
+                                coordinate.vertical > max_vertical_coord
+                                and
+                                coordinate.horizontal >= shape.coordinates.horizontal
+                                and not
+                                coordinate.horizontal > max_horiz_coord
+                        ),
+                        (
+                                coordinate.vertical <= shape.coordinates.vertical
+                                and not
+                                coordinate.vertical < min_vertical_coord
+                                and
+                                coordinate.horizontal <= shape.coordinates.horizontal
+                                and not
+                                coordinate.horizontal < min_horiz_coord),
+                        (
+                                coordinate.vertical >= shape.coordinates.vertical
+                                and not
+                                coordinate.vertical > max_vertical_coord
+                                and
+                                coordinate.horizontal <= shape.coordinates.horizontal
+                                and
+                                coordinate.horizontal < max_horiz_coord
+                        ),
+                        (
+                                coordinate.vertical <= shape.coordinates.vertical
+                                and not
+                                coordinate.vertical < min_vertical_coord
+                                and
+                                coordinate.horizontal >= shape.coordinates.horizontal
+                                and not
+                                coordinate.horizontal > min_horiz_coord
+                        ),
+                        shape.can_jump
+                        ]
+                        ):
+                    moves.append(coordinate)
+        print(min_horiz_coord, max_horiz_coord, min_vertical_coord, max_vertical_coord)
+        return moves
 
-    def move(self, _from: Coordinates, to: Coordinates):
-        if self.is_have_shape_by_coordinate(_from):
-            my_shape = self.get_shape_by_coordinate(_from)
-            self.change_square_shape(to, my_shape)
-            self.rm_shape_from_square(_from)
+    def coordinate_is_available(self, coordinate: Coordinates):
+        k = {value: key for key, value in enumerate(HorizontalCoordinates)}
+        return self[coordinate.vertical][k[coordinate.horizontal]].shape is None
+
+    def move(self, shape: Shape, to: Coordinates):
+        self.rm_shape_from_square(shape)
+        self.change_square_shape(to, shape)
 
     def __repr__(self):
         output = ""
