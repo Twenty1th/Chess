@@ -1,6 +1,3 @@
-from typing import List
-
-from coordinates import Coordinates
 from .shape import Shape
 
 

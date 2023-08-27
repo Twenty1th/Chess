@@ -41,20 +41,19 @@ class Shape(ABC):
         ...
 
     def get_available_moves(self) -> List[Coordinates]:
-        k = {value.value: key for key, value in enumerate(HorizontalCoordinates)}
         coordinates = self.coordinates
         moves = []
         for horiz, vert in self.moves():
-            new_horiz = k[coordinates.horizontal] + horiz
-            if max(k.items(), key=lambda x: x[1])[1] < new_horiz or new_horiz < 0:
+            new_horiz = HorizontalCoordinates.get_index(coordinates.horizontal) + horiz
+            if max(HorizontalCoordinates.items().items(), key=lambda x: x[1])[1] < new_horiz or new_horiz < 0:
                 continue
             new_vert = coordinates.vertical + vert
-            new_coordinate = Coordinates(list(k.keys())[new_horiz], new_vert)
+            new_coordinate = Coordinates(list(HorizontalCoordinates.items().keys())[new_horiz], new_vert)
             if new_coordinate != coordinates:
                 moves.append(new_coordinate)
         return list(filter(self.is_coordinate_available, moves))
 
-    def is_coordinate_available(self, new_coordinate: Coordinates) -> bool:
+    def is_coordinate_available(self, new_coordinate: Coordinates) -> bool: # noqa
         return not any(
             [(new_coordinate.vertical > max(VerticalCoordinates)),
              (new_coordinate.vertical < min(VerticalCoordinates)),

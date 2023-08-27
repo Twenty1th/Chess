@@ -1,4 +1,5 @@
 from enum import StrEnum, IntEnum
+from typing import Dict
 
 from colorama import Fore
 
@@ -12,6 +13,15 @@ class HorizontalCoordinates(StrEnum):
     F = "F"
     G = "G"
     H = "H"
+
+    @classmethod
+    def get_index(cls, item) -> int:
+        return cls.items()[item]
+
+    @classmethod
+    def items(cls) -> Dict:
+        k = {value: key for key, value in enumerate(HorizontalCoordinates)}
+        return k
 
 
 class VerticalCoordinates(IntEnum):
