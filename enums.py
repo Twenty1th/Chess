@@ -23,6 +23,10 @@ class HorizontalCoordinates(StrEnum):
         k = {value: key for key, value in enumerate(HorizontalCoordinates)}
         return k
 
+    @classmethod
+    def get_value_by_index(cls, index: int) -> str:
+        return list(cls.items().items())[index][0]
+
 
 class VerticalCoordinates(IntEnum):
     ONE = 1
@@ -47,3 +51,15 @@ class ShapeUnicodes(StrEnum):
 class ShapeColors(StrEnum):
     BLACK = Fore.LIGHTBLACK_EX
     WHITE = Fore.BLUE
+
+
+class MovesDirection(StrEnum):
+    TOP = 'TOP'
+    DOWN = 'DOWN'
+    LEFT = 'LEFT'
+    RIGHT = 'RIGHT'
+    TOP_LEFT = 'TOP_LEFT'
+    TOP_RIGHT = 'TOP_RIGHT'
+    DOWN_LEFT = 'DOWN_LEFT'
+    DOWN_RIGHT = 'DOWN_RIGHT'
+    JUMP = 'JUMP'

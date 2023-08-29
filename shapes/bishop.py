@@ -1,10 +1,19 @@
+from typing import List
+
+from enums import MovesDirection
 from .shape import Shape
 
 
 class Bishop(Shape):
     @property
-    def can_jump(self) -> bool:
-        return False
+    def direction_options(self) -> List[MovesDirection]:
+        return [MovesDirection.TOP_LEFT, MovesDirection.DOWN_LEFT,
+                MovesDirection.TOP_RIGHT, MovesDirection.DOWN_RIGHT]
 
     def moves(self):
-        return [(i, abs(i)) if j == 0 else (abs(i), i) for i in range(-7, 8) for j in range(0, 2)]
+        moves = []
+        for i in range(-7, 8):
+            moves.append((i, abs(i)))
+            moves.append((abs(i), i))
+            moves.append((i, i))
+        return moves

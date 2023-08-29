@@ -1,6 +1,6 @@
 from collections import namedtuple
 
-from coordinates import Coordinates
+from coordinate import Coordinate
 from enums import ShapeUnicodes, ShapeColors
 from shapes.bishop import Bishop
 from shapes.king import King
@@ -14,64 +14,64 @@ from shapes.shape import Shape
 class ShapeFactory:
 
     @classmethod
-    def __calculate_params(cls, coordinates: Coordinates) -> Knight | None:
+    def __calculate_params(cls, coordinates: Coordinate) -> Knight | None:
         match coordinates:
-            case Coordinates(_, 2):
+            case Coordinate(_, 2):
                 _unicode_symbol = ShapeUnicodes.PAWN
                 _color = ShapeColors.WHITE
                 _shape = Pawn
 
-            case Coordinates(_, 7):
+            case Coordinate(_, 7):
                 _unicode_symbol = ShapeUnicodes.PAWN
                 _color = ShapeColors.BLACK
                 _shape = Pawn
 
-            case Coordinates("A", 1) | Coordinates("H", 1):
+            case Coordinate("A", 1) | Coordinate("H", 1):
                 _unicode_symbol = ShapeUnicodes.ROOK
                 _color = ShapeColors.WHITE
                 _shape = Rook
 
-            case Coordinates("A", 8) | Coordinates("H", 8):
+            case Coordinate("A", 8) | Coordinate("H", 8):
                 _unicode_symbol = ShapeUnicodes.ROOK
                 _color = ShapeColors.BLACK
                 _shape = Rook
 
-            case Coordinates("B", 1) | Coordinates("G", 1):
+            case Coordinate("B", 1) | Coordinate("G", 1):
                 _unicode_symbol = ShapeUnicodes.KNIGHT
                 _color = ShapeColors.WHITE
                 _shape = Knight
 
-            case Coordinates("B", 8) | Coordinates("G", 8):
+            case Coordinate("B", 8) | Coordinate("G", 8):
                 _unicode_symbol = ShapeUnicodes.KNIGHT
                 _color = ShapeColors.BLACK
                 _shape = Knight
 
-            case Coordinates("C", 1) | Coordinates("F", 1):
+            case Coordinate("C", 1) | Coordinate("F", 1):
                 _unicode_symbol = ShapeUnicodes.BISHOP
                 _color = ShapeColors.WHITE
                 _shape = Bishop
 
-            case Coordinates("C", 8) | Coordinates("F", 8):
+            case Coordinate("C", 8) | Coordinate("F", 8):
                 _unicode_symbol = ShapeUnicodes.BISHOP
                 _color = ShapeColors.BLACK
                 _shape = Bishop
 
-            case Coordinates("D", 1):
+            case Coordinate("E", 1):
                 _unicode_symbol = ShapeUnicodes.KING
                 _color = ShapeColors.WHITE
                 _shape = King
 
-            case Coordinates("D", 8):
+            case Coordinate("E", 8):
                 _unicode_symbol = ShapeUnicodes.KING
                 _color = ShapeColors.BLACK
                 _shape = King
 
-            case Coordinates("E", 1):
+            case Coordinate("D", 1):
                 _unicode_symbol = ShapeUnicodes.QUEEN
                 _color = ShapeColors.WHITE
                 _shape = Queen
 
-            case Coordinates("E", 8):
+            case Coordinate("D", 8):
                 _unicode_symbol = ShapeUnicodes.QUEEN
                 _color = ShapeColors.BLACK
                 _shape = Queen
@@ -82,6 +82,6 @@ class ShapeFactory:
         return _shape(coordinates=coordinates, color=_color, unicode=_unicode_symbol)
 
     @classmethod
-    def get_shape_by_coordinates(cls, coordinates: Coordinates) -> Shape | None:
+    def get_shape_by_coordinates(cls, coordinates: Coordinate) -> Shape | None:
         shape = cls.__calculate_params(coordinates=coordinates)
         return shape

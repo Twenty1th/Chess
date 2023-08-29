@@ -1,13 +1,13 @@
 from colorama import Back, Style
 
-from coordinates import Coordinates
+from coordinate import Coordinate
 from shapes.shape import Shape
 
 
 class Square:
 
-    def __init__(self,  shape: Shape, coordinates: Coordinates):
-        self._coordinates: Coordinates = coordinates
+    def __init__(self, shape: Shape, coordinates: Coordinate):
+        self._coordinates: Coordinate = coordinates
         self._DEFAULT_BACKGROUND_COLOR: Back = Back.BLACK if (ord(self._coordinates.horizontal) + self._coordinates.vertical) % 2 == 0 else Back.WHITE
         self._background_color: Back = self._DEFAULT_BACKGROUND_COLOR
         self._shape: Shape = shape

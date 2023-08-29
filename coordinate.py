@@ -4,7 +4,7 @@ from enums import HorizontalCoordinates
 
 
 @dataclass
-class Coordinates:
+class Coordinate:
     horizontal: str
     vertical: int
 
@@ -12,7 +12,7 @@ class Coordinates:
         self.horizontal = horizontal
         self.vertical = vertical
 
-    def __lt__(self, other: 'Coordinates'):
+    def __lt__(self, other: 'Coordinate'):
         k = {value.value: key for key, value in enumerate(HorizontalCoordinates)}
         return k[self.horizontal] + self.vertical < k[other.horizontal] + other.vertical
 
@@ -23,3 +23,6 @@ class Coordinates:
     def __eq__(self, other):
         k = {value.value: key for key, value in enumerate(HorizontalCoordinates)}
         return self.horizontal == other.horizontal and self.vertical == other.vertical
+
+    def __repr__(self):
+        return f"{self.horizontal}{self.vertical}"
